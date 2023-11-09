@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using TryBets.Odds.Repository;
 
+
 namespace TryBets.Odds.Controllers;
 
 [Route("[controller]")]
@@ -20,6 +21,15 @@ public class OddController : Controller
 
     public IActionResult Patch(int MatchId, int TeamId, string BetValue)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var patch = _repository.Patch(MatchId, TeamId, BetValue);
+
+            return Ok(patch);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
